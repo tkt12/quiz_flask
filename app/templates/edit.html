@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}クイズ編集{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">⚙️ クイズ編集・削除</h1>
+
+<h3 class="mb-3">📋 登録済みクイズ一覧</h3>
+
+{% if quizzes %}
+<div class="table-responsive mb-4">
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>問題</th>
+                <th>答え</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for q in quizzes %}
+            <tr>
+                <td>{{ q.id }}</td>
+                <td>{{ q.question }}</td>
+                <td><strong>{{ q.answer }}</strong></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="alert alert-info">
+    <p class="mb-0">問題は登録されていません。</p>
+</div>
+{% endif %}
+
+<hr class="my-4">
+
+<h3 class="mb-3">🔧 編集・削除</h3>
+
+<div class="quiz-form mb-4">
+    <form method="post">
+        <div class="row">
+            <div class="col-md-8">
+                <label for="load_id" class="form-label">IDを入力して読込</label>
+                <input type="number" class="form-control" id="load_id" name="load_id" required min="1" placeholder="編集するクイズのIDを入力">
+            </div>
+            <div class="col-md-4 d-flex align-items-end">
+                <button type="submit" class="btn btn-info w-100">📥 読込</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% if edit_quiz %}
+<div class="quiz-form">
+    <h4 class="text-primary mb-3">✏️ 問題の編集</h4>
+    <form method="post" action="{{ url_for('update') }}">
+        <div class="mb-3">
+            <label for="id" class="form-label">ID</label>
+            <input type="number" class="form-control" id="id" name="id" value="{{ edit_quiz.id }}" readonly>
+        </div>
+        
+        <div class="mb-3">
+            <label for="question" class="form-label">問題</label>
+            <input type="text" class="form-control" id="question" name="question" value="{{ edit_quiz.question }}" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="answer" class="form-label">答え</label>
+            <input type="text" class="form-control" id="answer" name="answer" value="{{ edit_quiz.answer }}" required>
+        </div>
+        
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button type="submit" name="action" value="修正" class="btn btn-success btn-lg me-md-2">💾 修正</button>
+            <button type="submit" name="action" value="削除" class="btn btn-danger btn-lg" onclick="return confirm('本当に削除しますか？');">🗑️ 削除</button>
+        </div>
+    </form>
+</div>
+{% endif %}
+
+<div class="mt-4">
+    <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">🏠 トップに戻る</a>
+</div>
+{% endblock %}

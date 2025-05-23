@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}クイズ出題{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">🎯 クイズ出題</h1>
+
+{% if quiz %}
+<div class="quiz-form">
+    <form method="post" action="{{ url_for('check_answer') }}">
+        <div class="mb-4">
+            <h4 class="text-primary">問題</h4>
+            <p class="fs-5 bg-light p-3 rounded">{{ quiz.question }}</p>
+        </div>
+        
+        <input type="hidden" name="id" value="{{ quiz.id }}">
+        
+        <div class="mb-3">
+            <label for="user_answer" class="form-label">あなたの答え</label>
+            <input type="text" class="form-control form-control-lg" id="user_answer" name="user_answer" required placeholder="答えを入力してください" autofocus>
+        </div>
+        
+        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+            <button type="submit" class="btn btn-primary btn-lg me-md-2">✅ 解答する</button>
+        </div>
+    </form>
+</div>
+
+<div class="mt-3 text-center">
+    <form method="get" action="{{ url_for('quiz') }}" class="d-inline">
+        <button type="submit" class="btn btn-outline-info">🔄 次の問題</button>
+    </form>
+</div>
+
+{% else %}
+<div class="alert alert-info text-center">
+    <h4>問題がありません</h4>
+    <p>まずクイズを作成してください。</p>
+    <a href="{{ url_for('create') }}" class="btn btn-success">クイズを作成する</a>
+</div>
+{% endif %}
+
+<div class="mt-4">
+    <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">🏠 トップに戻る</a>
+</div>
+{% endblock %}

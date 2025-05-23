@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  flask-app:
+    build: ./flask
+    container_name: flask-quiz-app
+    volumes:
+      - ./app:/app
+      - ./data:/app/data
+    ports:
+      - "8000:8000"
+    environment:
+      - FLASK_ENV=development
+      - FLASK_DEBUG=1
+    restart: always

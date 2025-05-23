@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}クイズ作成{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">📝 クイズ作成</h1>
+
+<div class="quiz-form">
+    <form method="post">
+        <div class="mb-3">
+            <label for="question" class="form-label">問題</label>
+            <input type="text" class="form-control form-control-lg" id="question" name="question" required placeholder="クイズの問題を入力してください">
+        </div>
+        
+        <div class="mb-3">
+            <label for="answer" class="form-label">答え</label>
+            <input type="text" class="form-control form-control-lg" id="answer" name="answer" required placeholder="正解を入力してください">
+        </div>
+        
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button type="submit" class="btn btn-success btn-lg">💾 保存</button>
+        </div>
+    </form>
+</div>
+
+<div class="mt-4">
+    <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">🏠 トップに戻る</a>
+</div>
+{% endblock %}
